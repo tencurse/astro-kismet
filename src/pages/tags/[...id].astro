@@ -3,19 +3,19 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
 import WorkCard from '@/components/WorkCard.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getAllShips, getWorksByShip } from '@/lib/data-utils'
+import { getAllTags, getWorksByTag } from '@/lib/data-utils'
 
 export async function getStaticPaths() {
-  const shipMap = await getAllShips()
-  const uniqueShips = Array.from(shipMap.keys())
+  const tagMap = await getAllTags()
+  const uniqueTags = Array.from(tagMap.keys())
 
   return Promise.all(
-    uniqueShips.map(async (ship) => {
-      const works = await getWorksByShip(ship)
+    uniqueTags.map(async (tag) => {
+      const works = await getWorksByTag(tag)
       return {
-        params: { id: ship },
+        params: { id: tag },
         props: {
-          ship,
+          tag,
           works,
         },
       }
@@ -23,20 +23,20 @@ export async function getStaticPaths() {
   )
 }
 
-const { ship, works } = Astro.props
+const { tag, works } = Astro.props
 ---
 
 <Layout class="max-w-3xl">
   <PageHead
     slot="head"
-    title={`Works in ${ship}`}
-    description={`A collection of works in ship ${ship}.`}
+    title={`Works in ${tag}`}
+    description={`A collection of works in tags ${tag}.`}
     noindex
   />
   <Breadcrumbs
     items={[
-      { href: '/ships', label: 'Ships', icon: 'lucide:heart' },
-      { label: ship, icon: 'lucide:heart' },
+      { href: '/tags', label: 'Tags', icon: 'lucide:tags' },
+      { label: tag, icon: 'lucide:tags' },
     ]}
   />
 
@@ -44,7 +44,7 @@ const { ship, works } = Astro.props
     works.length > 0 && (
       <section class:list={[works.length > 0 && 'mt-8']}>
         <h2 class="mb-4 text-3xl font-semibold">
-          {works.length} work{works.length === 1 ? '' : 's'} in {ship}
+          {works.length} work{works.length === 1 ? '' : 's'} in {tag}
         </h2>
         <ul class="flex flex-col gap-y-6">
           {works.map((work, index) => (
