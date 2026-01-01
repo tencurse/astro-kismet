@@ -24,14 +24,16 @@ const rootParentId = isCurrentSubpost
   : parentId
 
 // Collection-specific functions
-const getItemById = collection === 'works' ? getWorkById : getPostById
-const getSubitemsForParent =
-  collection === 'works' ? getSubworksForParent : getSubpostsForParent
-const getParentItem = collection === 'works' ? getParentWork : getParentPost
-const getItemReadingTime =
-  collection === 'works' ? getWorkReadingTime : getPostReadingTime
-const getCombinedItemReadingTime =
-  collection === 'works' ? getCombinedWorkReadingTime : getCombinedReadingTime
+const isWork = collection === 'works'
+const getItemById = isWork ? getWorkById : getPostById
+const getSubitemsForParent = isWork
+  ? getSubworksForParent
+  : getSubpostsForParent
+const getParentItem = isWork ? getParentWork : getParentPost
+const getItemReadingTime = isWork ? getWorkReadingTime : getPostReadingTime
+const getCombinedItemReadingTime = isWork
+  ? getCombinedWorkReadingTime
+  : getCombinedReadingTime
 
 const currentPost = !isCurrentSubpost ? await getItemById(currentPostId) : null
 const subposts = await getSubitemsForParent(rootParentId)
@@ -56,7 +58,8 @@ const subpostsWithReadingTime = await Promise.all(
 
 // When viewing parent work with chapters, highlight the first chapter
 const firstChapter = subposts.length > 0 ? subposts[0] : null
-const shouldHighlightFirstChapter = !isCurrentSubpost && firstChapter && subposts.length > 0
+const shouldHighlightFirstChapter =
+  !isCurrentSubpost && firstChapter && subposts.length > 0 && isWork
 
 const currentSubpostDetails = isCurrentSubpost
   ? subpostsWithReadingTime.find((subpost) => subpost.id === currentPostId)
@@ -84,8 +87,9 @@ const currentSubpostDetails = isCurrentSubpost
             </div>
             <div class="flex flex-grow flex-col truncate text-sm">
               <span class="text-muted-foreground truncate">
-                {currentSubpostDetails
-                  ? (currentSubpostDetails.data.title || `Chapter ${(currentSubpostDetails.data.order ?? 0)}`)
+                {(currentSubpostDetails)
+                  ? currentSubpostDetails.data.title ||
+                    `Chapter ${currentSubpostDetails.data.order ?? 0}`
                   : activePost?.data.title}
               </span>
             </div>
@@ -107,7 +111,7 @@ const currentSubpostDetails = isCurrentSubpost
             <ul class="flex list-none flex-col gap-y-1 px-4 pb-4">
               {activePost && (
                 <li>
-                  {(isActivePost && !shouldHighlightFirstChapter) ? (
+                  {isActivePost && !shouldHighlightFirstChapter ? (
                     <div class="text-foreground bg-muted mobile-subposts-active-item flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium">
                       <Icon
                         name="lucide:book-open-text"
@@ -163,7 +167,9 @@ const currentSubpostDetails = isCurrentSubpost
               {subpostsWithReadingTime.length > 0 && (
                 <div class="ml-4 space-y-1">
                   {subpostsWithReadingTime.map((subpost) =>
-                    currentPostId === subpost.id || (shouldHighlightFirstChapter && subpost.id === firstChapter?.id) ? (
+                    currentPostId === subpost.id ||
+                    (shouldHighlightFirstChapter &&
+                      subpost.id === firstChapter?.id) ? (
                       <div class="text-foreground bg-muted mobile-subposts-active-item flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium">
                         <Icon
                           name="lucide:file-text"
@@ -171,7 +177,11 @@ const currentSubpostDetails = isCurrentSubpost
                           aria-hidden="true"
                         />
                         <div class="flex flex-col">
-                          <span class="line-clamp-2">{subpost.data.title || `Chapter ${(subpost.data.order ?? 0)}`}</span>
+                          <span class="line-clamp-2">
+                            {!subpost.data.title && isWork
+                              ? `Chapter ${subpost.data.order ?? 0}`
+                              : subpost.data.title}
+                          </span>
                           <span class="text-muted-foreground/80 text-xs">
                             {subpost.readingTime}
                           </span>
@@ -188,7 +198,11 @@ const currentSubpostDetails = isCurrentSubpost
                           aria-hidden="true"
                         />
                         <div class="flex flex-col">
-                          <span class="line-clamp-2">{subpost.data.title || `Chapter ${(subpost.data.order ?? 0) }`}</span>
+                          <span class="line-clamp-2">
+                            {!subpost.data.title && isWork
+                              ? `Chapter ${subpost.data.order ?? 0}`
+                              : subpost.data.title}
+                          </span>
                           <span class="text-muted-foreground/80 hover:text-foreground/80 text-xs">
                             {subpost.readingTime}
                           </span>

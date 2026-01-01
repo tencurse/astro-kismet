@@ -2,7 +2,7 @@
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Link from '@/components/Link.astro'
 import PostHead from '@/components/PostHead.astro'
-import PostNavigation from '@/components/PostNavigation.astro'
+import WorkNavigation from '@/components/WorkNavigation.astro'
 import SubpostsHeader from '@/components/SubpostsHeader.astro'
 import SubpostsSidebar from '@/components/SubpostsSidebar.astro'
 import TOCHeader from '@/components/TOCHeader.astro'
@@ -347,8 +347,7 @@ const secondChapter = subworks.length > 1 ? subworks[1] : null
       
       <div class={!isCurrentSubwork && !hasChapters ? `xl:hidden` : ''}>
         {(isCurrentSubwork || hasChapters) && (
-          <PostNavigation
-            collection="works"
+          <WorkNavigation
             newerPost={
               isCurrentSubwork 
                 ? navigation.newer 
@@ -408,8 +407,7 @@ const secondChapter = subworks.length > 1 ? subworks[1] : null
 
     <div class={!isCurrentSubwork && !hasChapters ? `col-start-2 xl:hidden` : 'col-start-2'}>
         {(isCurrentSubwork || hasChapters) && (
-          <PostNavigation
-            collection="works"
+          <WorkNavigation
             newerPost={
               isCurrentSubwork 
                 ? navigation.newer 
