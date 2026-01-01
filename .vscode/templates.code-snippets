@@ -1,7 +1,7 @@
 {
 	"Fic template": {
-		"prefix": "fic-oneshot",
-		"description": "YML frontmatter for one-shot fics",
+		"prefix": "fic-template",
+		"description": "YML frontmatter for fics",
 		"body": [
 			"---",
 			"ao3Id: '$1'",
@@ -32,4 +32,18 @@
 			"---"
 		]
 	},
+	"Blog post template": {
+		"prefix": "blog-template",
+		"description": "YML frontmatter for blog posts",
+		"body": [
+			"---",
+			"title: '$1'",
+			"description: '$2'",
+			"date: ${3:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}",
+			"tags: ['$4']",
+			"# image: '$5'",
+			"# authors: ['$6']",
+			"---"
+		]
+	}
 }
