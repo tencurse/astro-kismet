@@ -126,11 +126,7 @@ const tocSections = await getTOCSections(currentPostId)
           class="mb-2 scroll-mt-31 font-sans text-3xl leading-tight font-medium sm:text-4xl"
           id="post-title"
         >
-          {
-            isCurrentSubpost && post.data.order !== undefined
-              ? `Chapter ${post.data.order + 1}: ${post.data.title}`
-              : post.data.title
-          }
+          {post.data.title}
         </h1>
 
         <div
@@ -197,7 +193,7 @@ const tocSections = await getTOCSections(currentPostId)
             subpostCount > 0 && (
               <div class="flex w-full items-center justify-center gap-1 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0">
                 <Icon name="lucide:file-text" class="size-3" />
-                {subpostCount} chapter{subpostCount === 1 ? '' : 's'}
+                {subpostCount} subpost{subpostCount === 1 ? '' : 's'}
               </div>
             )
           }
@@ -233,7 +229,7 @@ const tocSections = await getTOCSections(currentPostId)
     }
 
     <article
-      class="prose col-start-2 max-w-none font-sans text-base/relaxed sm:text-sm/relaxed blog"
+      class="prose blog col-start-2 max-w-none font-sans text-base/relaxed sm:text-sm/relaxed"
     >
       <Content />
     </article>
