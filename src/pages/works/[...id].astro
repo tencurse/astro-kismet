@@ -390,7 +390,7 @@ const secondChapter = subworks.length > 1 ? subworks[1] : null
       class="prose col-start-2 max-w-none font-serif text-base/relaxed sm:text-[0.9em]/relaxed mt-2"
     >
       {firstChapterContent ? <firstChapterContent.Content /> : <Content />}
-      <p class="font-sans text-sm/relaxed sm:text-xs/relaxed mt-14">If you liked this work, consider leaving kudos or a comment on <Link href={`https://archiveofourown.org/works/${isCurrentSubwork ? parentWork?.data.ao3Id : work.data.ao3Id}${isCurrentSubwork && work.data.ao3Id ? `/chapters/${work.data.ao3Id}` : ''}`} external>AO3</Link>.</p>
+      <p class="font-sans text-sm/relaxed sm:text-xs/relaxed mt-14 border-t pt-4">If you liked this work, consider leaving kudos or a comment on <Link href={`https://archiveofourown.org/works/${isCurrentSubwork ? parentWork?.data.ao3Id : work.data.ao3Id}${isCurrentSubwork && work.data.ao3Id ? `/chapters/${work.data.ao3Id}` : ''}`} external>AO3</Link>.</p>
     </article>
 
     {
