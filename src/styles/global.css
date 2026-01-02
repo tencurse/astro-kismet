@@ -86,6 +86,6 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    @apply border-border outline-ring/50 tracking-tight;
+    @apply border-border outline-ring/50 tracking-tight dark:selection:bg-primary/50 selection:bg-primary/35;
   }
 }
