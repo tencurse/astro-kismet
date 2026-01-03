@@ -34,14 +34,17 @@ const isSubpost = !!parentPost
             Previous Chapter
           </span>
           <span class="w-full text-left text-sm text-balance text-ellipsis">
-            {olderPost?.data.title || 'No older chapter'}
+            {olderPost
+              ? olderPost.data.title || `Chapter ${olderPost.data.order ?? 0}`
+              : isSubpost
+                ? 'No newer chapter'
+                : "You're at the newest post!"}
           </span>
         </div>
       </Link>
-    ) :
-    <div class="group flex size-full opacity-0">
-
-    </div>
+    ) : (
+      <div class="group flex size-full opacity-0"></div>
+    )
   }
   {
     isSubpost && (
@@ -85,8 +88,10 @@ const isSubpost = !!parentPost
       <span class="w-full text-right text-sm text-balance text-ellipsis">
         {
           newerPost
-            ? (newerPost.data.title || `Chapter ${(newerPost.data.order ?? 0)}`)
-            : (isSubpost ? 'No newer chapter' : "You're at the newest post!")
+            ? newerPost.data.title || `Chapter ${newerPost.data.order ?? 0}`
+            : isSubpost
+              ? 'No newer chapter'
+              : "You're at the newest post!"
         }
       </span>
     </div>
